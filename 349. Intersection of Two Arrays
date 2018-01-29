@@ -1,0 +1,47 @@
+Given two arrays, write a function to compute their intersection.
+
+Example:
+Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].
+
+Note:
+Each element in the result must be unique.
+The result can be in any order.
+
+//方法一：先放进两个set里面，由于set是自动按照升序排序，并且没有重复元素的，因此就可以找交集了
+class Solution {
+public:
+	vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+		set<int> myset1;
+		set<int> myset2;
+		for (auto u : nums1)
+			myset1.insert(u);
+		for (auto u : nums2)
+			myset2.insert(u);
+		vector<int> result;
+		for (auto i1 = myset1.begin(), i2 = myset2.begin(); i1 != myset1.end() && i2 != myset2.end(); ) {
+			if ((*i1) == (*i2)) {
+				result.push_back(*i1);
+				++i1;
+				++i2;
+			}
+			else if ((*i1) < (*i2)) //这里注意一定要是else if，这里很容易出错
+				++i1;
+			else 
+				++i2;
+		}
+		return result;
+	}
+};
+//方法二：也可以用一个set来存放数组1的元素，然后不断对这个set找数组2中元素是否存在，存在就是交集，这个方法更加方便
+//这个是某个discussion的答案，由于代码很简单，直接粘贴过来了，就不自己直接写了
+class Solution {
+public:
+	vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+		set<int> slice(nums1.begin(), nums1.end());
+		vector<int> result;
+		for (auto i : nums2)
+			if (slice.erase(i))//这里用的是erase函数，因为必须是erase函数才行，返回值进行判断，不能用count，否则会重复判断
+				result.push_back(i);
+		return result;
+	}
+};
