@@ -1,0 +1,45 @@
+Given two strings s and t, write a function to determine if t is an anagram of s.
+
+For example,
+s = "anagram", t = "nagaram", return true.
+s = "rat", t = "car", return false.
+
+Note:
+You may assume the string contains only lowercase alphabets.
+
+Follow up:
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
+
+//方法一：用一个哈希表来判断，这个是判断相同字母异序词的常用方法，时间复杂度O(n)，空间O(1)
+//其实类似哈希表也不一定要用要给map，可以只用一个简单的普通数组，例如这里可以用一个26个单位的数组
+class Solution {
+public:
+	bool isAnagram(string s, string t) {
+		if (s.size() != t.size())//必须要用这个判断，否则后面的判断不好用，也许t是s的一个子集，也会返回true
+			return false;
+		map<char, int> save;
+		for (char &c:s)
+			if (save.count(c))
+				++save[c];
+			else
+				save.insert(make_pair(c, 1));
+		for (char &c : t)
+			if (save[c] == 0)
+				return false;
+			else
+				--save[c];
+		return true;
+	}
+};
+//方法二：这个是O(nlogn)方法，就是先排序，然后一一比较，这也是常用方法，但是时间复杂度不够好
+//由于很简单，就不自己写了，这里附上leetcode上的答案java代码
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    char[] str1 = s.toCharArray();
+    char[] str2 = t.toCharArray();
+    Arrays.sort(str1);
+    Arrays.sort(str2);
+    return Arrays.equals(str1, str2);
+}
