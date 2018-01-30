@@ -4,7 +4,8 @@ Example:
 Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].
 
 Note:
-Each element in the result must be unique.
+Each element in the result must be unique.（注意，这里需要是unique的，这就证明这里可以用集合set来做）
+这个Intersection of Two Arrays还有一个第二个版本，就是要求重复元素也要给出来，也在Leetcode-Sort里面
 The result can be in any order.
 
 //方法一：先放进两个set里面，由于set是自动按照升序排序，并且没有重复元素的，因此就可以找交集了
